@@ -1,5 +1,6 @@
 import random
 import time
+import math
 
 def RSAEncrypt():
     start = time.time()
@@ -8,7 +9,7 @@ def RSAEncrypt():
     x = 3104
     
     #Number of bits for random numbers
-    n = 10
+    n = 16
     
     #Set p and q as large random numbers
     p = GetPrime(n)
@@ -29,8 +30,9 @@ def RSAEncrypt():
     
     encrypted = Encrypt(x, e, N)
     print "Encoded message: ", encrypted
-    
+        
     decrypted = Decrypt(encrypted, d, N)
+
     print "Decoded message: ", decrypted
     
     print "\nn=",n
@@ -41,7 +43,7 @@ def GetPrime(x):
     while isPrime == False:
         n = random.getrandbits(x)
         if n%2 != 0:
-            for i in range(3, int(pow(n,.5)), 2):
+            for i in range(3, int(math.sqrt(n)), 2):
                 if n%i == 0:
                     isPrime = False
                 else:
@@ -71,7 +73,6 @@ def Encrypt(x, e, N):
 
 def Decrypt(y, d, N):
     return pow(y, d)%N
-
+    
 if __name__ == '__main__':
     RSAEncrypt()
-    
